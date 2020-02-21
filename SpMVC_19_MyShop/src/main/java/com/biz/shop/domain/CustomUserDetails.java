@@ -5,18 +5,36 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @ToString
 public class CustomUserDetails implements UserDetails{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String nick_name;
 	private String tel;
 	private String addr;
+
+	
+	
+	@Setter
+	private String username;
+	
+	@Setter
+	private String password;
+	
+
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

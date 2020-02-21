@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="rootPath" value="${pageContext.request.contextPath}" />
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<c:set var="rootPath" value="${pageContext.request.contextPath}" />    
+<%@ taglib uri="http://www.springframework.org/tags/form"  prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ include file="/WEB-INF/views/include/include-head.jspf" %>
 <style>
@@ -169,12 +169,21 @@ $(function(){
 			<h3>로그인을 환영합니다.</h3>
 		</c:if>
 		<!-- spring form tag를 사용하면 생략가능 -->
+		
 		<input type="hidden" 
 				name="${_csrf.parameterName}" 
 				value="${_csrf.token}">
-		<input type="text" id="id" name="username" placeholder="사용자 ID">
+				
+		<input type="text" id="username" name="username" placeholder="사용자 ID">
 		<input type="password" id="password" name="password" placeholder="비밀번호">
 		<button type="submit" id="btn-login-s">로그인</button>
 		<button type="button" id="btn-join">회원가입</button>
 		
 	</form:form>
+	
+	
+
+	
+	
+	
+	
