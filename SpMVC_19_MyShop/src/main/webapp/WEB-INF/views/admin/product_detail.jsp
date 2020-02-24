@@ -4,7 +4,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <script>
-$(function() {
+
+$(function(){
 	var toolbar = [
 		['style',['bold','italic','underline'] ],
 		['fontsize',['fontsize']],
@@ -15,9 +16,9 @@ $(function() {
 		['table',['table']],
 		['insert',['link','hr','picture']],
 		['view',['fullscreen','codeview']]
-		
 	]
-	$("#p_detail").summernote({
+	
+	$("#p_detail").summernote({		
 		lang:'ko-KR',
 		width:'100%',
 		toolbar:toolbar,
@@ -25,6 +26,7 @@ $(function() {
 		disableDragAndDrop : false
 	})
 })
+
 </script>
 <form:form 
 	action="${rootPath}/admin/product/input" 

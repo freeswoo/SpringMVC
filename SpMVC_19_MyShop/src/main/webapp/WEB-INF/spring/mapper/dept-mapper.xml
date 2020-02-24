@@ -5,10 +5,10 @@
   
  <mapper namespace="com.biz.shop.dao.DeptDao">
 
-	<select id="findByDName" resultType="deptVO">
-	SELECT * 
-	FROM tbl_dept
-	WHERE d_name LIKE CONCAT('%', #{search}, '%')
-	</select> 
- 
+ 	<select id="findByDName" resultType="deptVO">
+ 		SELECT * 
+ 		FROM tbl_dept 
+ 		WHERE d_name like CONCAT('%',#{search},'%')
+ 	</select>
+
  </mapper> 

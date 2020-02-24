@@ -37,5 +37,4 @@ public class DeptService {
 	public List<DeptVO> findByDName(String search) {
 		return deptDao.findByDName(search);
 	}
-	
 }

@@ -11,7 +11,7 @@
 
 	<bean id="myDS" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-		<property name="url" value="jdbc:mysql://localhost:3306/emsDB?serverTimeZone=Asia/Seoul&amp;useSSL=false"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/emsDB?serverTimeZone=Asia/Seoul"/>
 		<property name="username" value="${mysql.user}"/>
 		<property name="password" value="${mysql.password}"/>
 	</bean>
@@ -19,13 +19,16 @@
 	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="myDS"/>
 		<property name="typeAliasesPackage" value="com.biz.shop.domain"/>
-		<property name="mapperLocations" value="/WEB-INF/spring/mapper/*-mapper.xml"/>
+		<property name="mapperLocations" value="/WEB-INF/spring/mapper/*-mapper.xml" />
 	</bean>
-
+	
 	<tx:annotation-driven/>
 	<bean class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sessionFactory"/>
 	</bean>
-	<mybatis-spring:scan base-package="com.biz.shop.dao"/>
 	
+	<mybatis-spring:scan base-package="com.biz.shop.dao"/>
+
+
+
 </beans>

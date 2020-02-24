@@ -38,17 +38,16 @@ $(function(){
 			document
 				.location
 				.href
-			="${rootPath}/admin/dept/update/" + id
-		} else if(key == "delete") {
+			="${rootPath}/admin/dept/update/" + id				
+		} else if (key == "delete") {
 			if(confirm("정말 삭제합니다!!!")) {
 				document
 				.location
 				.href
-			="${rootPath}/admin/dept/delete/" + id	
+				="${rootPath}/admin/dept/delete/" + id				
 			}
 		}
 	}
-	
 	$.contextMenu({
 		selector:".dept_tr",
 		items : {
@@ -57,6 +56,8 @@ $(function(){
 		},
 		callback : dept_call
 	})
+	
+	
 	
 })
 
