@@ -2,8 +2,18 @@ package com.biz.bbs.domain;
 
 import org.apache.ibatis.type.Alias;
 
-/*
- * VO(Value Object) = DTO(Data Transfer Object) 클래스
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+/* VO(Value Object) = DTO(Data Transfer Object) 클래스
  * 메서드와 메서드간에
  * web 브라우저와 컨트롤러(메서드)간에
  * 컨트롤러와 view.jsp 간에 데이터를 
@@ -35,7 +45,6 @@ import org.apache.ibatis.type.Alias;
  * 		총점 getter 메서드의 내부에 어떤 코드가 있는지 몰라도
  * 		getter 메서드만 호출하면 총점을 알수 있다 라는 개념
  */
-
 /*
  * mybatis @Alias()
  * mybatis 초기설정에서 typeAliasPackage를 설정하면
