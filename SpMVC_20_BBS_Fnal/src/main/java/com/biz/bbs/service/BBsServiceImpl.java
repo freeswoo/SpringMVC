@@ -7,8 +7,8 @@ import java.util.List;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
 
-import com.biz.bbs.dao.BBsDao;
 import com.biz.bbs.domain.BBsVO;
+import com.biz.bbs.repository.BBsDao;
 
 @Service
 public class BBsServiceImpl implements BBsService {
@@ -55,7 +55,6 @@ public class BBsServiceImpl implements BBsService {
 
 	@Override
 	public int delete(long b_id) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
