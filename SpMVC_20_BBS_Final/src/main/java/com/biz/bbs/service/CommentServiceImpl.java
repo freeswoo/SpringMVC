@@ -43,10 +43,10 @@ public class CommentServiceImpl implements CommentService {
 	 */
 	@Override
 	public List<CommentVO> findByBId(long c_b_id) {
-		List<CommentVO> cmtList = cmtDao.findByBId(c_b_id);
+		List<CommentVO> cmtList = cmtDao.findByBId(c_b_id); 
 		List<CommentVO> retList = new ArrayList<CommentVO>();
 		for(CommentVO vo : cmtList) {
-			retList.addAll(this.findByBIdRepl(vo, 0));
+			retList.addAll(this.findByBIdRepl(vo,0));
 		}
 		return retList;
 	}
@@ -57,10 +57,9 @@ public class CommentServiceImpl implements CommentService {
 	private List<CommentVO> findByBIdRepl(CommentVO cmtVO, int depth) {
 		
 		List<CommentVO> retList = new ArrayList<CommentVO>();
-		
 		if(depth > 0) {
 			String c_subject = "&nbsp;";
-			for(int i = 0 ; i < depth ; i++) {
+			for(int i = 0 ; i < depth; i++) {
 				c_subject += "re: ";
 			}
 			c_subject += cmtVO.getC_subject();
@@ -79,11 +78,11 @@ public class CommentServiceImpl implements CommentService {
 	
 	@Override
 	public int insert(CommentVO commentVO) {
-		
 		if(commentVO.getC_id() > 0) {
+		
 			int ret = cmtDao.update(commentVO);
 			return ret;
-			
+		
 		} else {
 			
 			// 작성일자를 현재 저장하는 날짜로 세팅을 하자
@@ -94,6 +93,7 @@ public class CommentServiceImpl implements CommentService {
 			commentVO.setC_date_time(ldt.format(df));
 			int ret = cmtDao.insert(commentVO);
 			return ret;
+			
 		}
 	}
 

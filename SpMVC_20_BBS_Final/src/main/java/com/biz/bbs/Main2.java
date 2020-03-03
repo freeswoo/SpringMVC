@@ -7,7 +7,7 @@ import com.biz.bbs.domain.BBsVO;
 import com.biz.bbs.service.FileReaderService;
 
 public class Main2 {
-
+	
 	public static void main(String[] args) {
 		
 		FileReaderService fService = new FileReaderService();
@@ -21,6 +21,8 @@ public class Main2 {
 			prList.add(vo);
 			prList.addAll(fService.getRepl(bbsList,vo));
 		});
-		pList.forEach(System.out::println);
+		prList.forEach(System.out::println);
+		
 	}
 }
+

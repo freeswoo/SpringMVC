@@ -5,7 +5,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 	<%@ include file="/WEB-INF/views/include/include-head.jspf" %>
 	<script>
 	$(function(){

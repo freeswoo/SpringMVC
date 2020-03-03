@@ -10,4 +10,3 @@
 		<div class="col-1 cmt-item-del"><b>&times;</b></div>
 	</div>
 </c:forEach>
-

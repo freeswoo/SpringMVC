@@ -12,13 +12,14 @@
 		// $(".cmt-item").click(function(){
 		$(document).on("click",".cmt-item",function() {
 			let id = $(this).data("id")
-			
-			let writer = $(this).find("div.writer").text()
+
+			let writer = $(this).find("div.writer").find("b").text()
 			let subject = $(this).find("div.subject").text()
 			
 			$("#c_id").val(id)
 			$("#c_writer").val(writer)
 			$("#c_subject").val(subject)
+			
 		})
 		
 		$(document).on("click","div.cmt-item-del",
@@ -59,7 +60,7 @@
 			
 			event.stopPropagation()
 			
-			$.get("${rootPath}/comment/repl",data,function(result) {
+			$.get("${rootPath}/comment/repl",data,function(result){
 				$(".modal-body").html(result)
 				$(".modal-main").css("display","block")
 			})
@@ -74,6 +75,7 @@
 				if(confirm("삭제할까요")) {
 					document.location.replace("${rootPath}/delete/${BBS.b_id}")    
 				}
+			
 			} else if(txt == '답변저장') {
 				var formData = $("form.repl").serialize()
 				$.ajax({
@@ -89,11 +91,15 @@
 						alert("서버와 통신오류")
 					}
 				})
-			
-			} else if(txt == '저장') {	
+
+				
+			} else if(txt == '저장') {
+				
 				/*
-				ajax를 사용해서 form 담긴 데이터를 controller 전송
-				.serialize() 함수를 사용해서 form에 담긴 데이터를 
+				ajax를 사용해서 form 담긴 데이터를 
+				controller 전송
+				.serialize() 함수를 사용해서 
+					form에 담긴 데이터를
 					문자열화하고, query형식으로 변경하고
 					ajax의 data에 담아서 전송
 				*/
@@ -102,9 +108,9 @@
 				// json 형태로 변경하기
 				// 항목이 많을 경우 문제를 일으킬수 있다
 				var aData = {
-						c_writer : $("#c_writer").val(),
-						c_subject : $("#c_subject").val()
-				 }
+					c_writer : $("#c_writer").val(),
+					c_subject :	$("#c_subject").val()
+				}
 				
 				// serialize()를 사용하면 모든 문제 해결
 				var formData = $("form.main").serialize()
@@ -122,12 +128,14 @@
 					}
 				})
 				return true
+			
+			} else if(txt == "답글"){
+				// alert("답글쓰기")
+				document.location.href = "${rootPath}/repl?b_id=${BBS.b_id}"
 				
-			} else if(txt == "답글") {
-				alert("답글쓰기")
-				document.location.href="${rootPath}/repl?b_id=${BBS.b_id}"
+				
 				return false
-				
+			
 			} else {
 				document.location.href="${rootPath}/list"
 			}
@@ -191,57 +199,57 @@
 		<div class="p-4 cmt-list">
 			<%@ include file="/WEB-INF/views/comment_list.jsp" %>
 		</div>
-		
-<style>
 
+<style>
 	div.modal-main {
 		position: fixed;
-		top: 0;
-		left: 0;
+		top:0;
+		left:0;
 		
 		width: 100%;
 		height: 100%;
 		
 		overflow: auto;
 		
-		background-color:  rgba(0,0,0,0.4);
+		background-color: rgba(0,0,0,0.4);
 		z-index: 10;
 		display: none;
 	}
 	
 	div.modal-content {
-		width: 80%;
+		
+		width : 80%;
 		position: relative;
 		margin: auto;
-		top: 300px;
-		padding: 0;
+		top:300px;
+		padding:0;
+		
+	
 	}
 	
-	div.modal-header {
+	div.modal-header{
 		display: flex;
 		justify-content: flex-end;
 	}
 	
 	span.modal-close {
 		cursor: pointer;
-		float: right;
 		font-size: 30px;
 		font-weight: bold;
-		color: black;
+		color:black;
 	}
 	
 	span.modal-close:hover, span.modal-close:focus {
-		color: #000;
+		color:#000;
 	}
-	
-</style>
 
+</style>
 <script>
-	$(function() {
-		$(".modal-close").click(function() {
-			$(".modal-main").css("display","none")
-		})
+$(function(){
+	$(".modal-close").click(function(){
+		$(".modal-main").css("display","none")
 	})
+})
 </script>
 
 <div class="modal-main">
@@ -255,7 +263,9 @@
 	</div>
 </div>
 
-
+		
+		
+		
 	</section>
 </body>
 </html>

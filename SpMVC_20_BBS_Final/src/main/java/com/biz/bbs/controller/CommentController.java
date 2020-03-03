@@ -85,10 +85,12 @@ public class CommentController {
 	}
 	
 	@RequestMapping(value="/repl",method=RequestMethod.GET)
-	public String repl(CommentVO cmtVO, Model model) {
+	public String repl(CommentVO cmtVO,Model model) {
 		
 		model.addAttribute("CMT",cmtVO);
 		return "comment_write";
+	
 	}
+	
 	
 }

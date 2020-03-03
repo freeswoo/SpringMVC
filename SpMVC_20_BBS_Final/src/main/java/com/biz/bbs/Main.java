@@ -9,15 +9,14 @@ import com.biz.bbs.domain.BBsVO;
 import com.biz.bbs.service.FileReaderService;
 
 public class Main {
-
-	// 진입점 end point method
+	
+	// 진입점, endpoint method
 	public static void main(String[] args) {
 		
 		FileReaderService fService = new FileReaderService();
 		List<BBsVO> bbsList = fService.getBBsData();
-		
-		Collections.sort(bbsList, new Comparator<BBsVO>() {
-
+	
+		Collections.sort(bbsList,new Comparator<BBsVO>() {
 			@Override
 			public int compare(BBsVO o1, BBsVO o2) {
 				int s = (int)(o1.getB_id() - o2.getB_id());
@@ -31,19 +30,20 @@ public class Main {
 		// 두번째 매개변수는 Comparator인터페이스를 이용한
 		// 구현체가 오도록 되어있기 때문에 가능하다
 		Collections.sort(bbsList,(o1,o2)->
-				(int)(o1.getB_id() - o2.getB_id())
+			(int)(o1.getB_id() - o2.getB_id())
 		);
 		// 날짜, 시간 역순 정렬
 		Collections.sort(bbsList,(o1,o2)->
 			o2.getB_date_time().compareTo(o1.getB_date_time())
 		);
-		
+
 		for(BBsVO vo : bbsList) {
 			System.out.println(vo.toString());
 		}
 		
 		// 부모id(b_p_id)가 0인 리스트만 추출
 		List<BBsVO> pList = new ArrayList<BBsVO>();
+		
 		for(BBsVO vo : bbsList) {
 			if(vo.getB_p_id() == 0)
 				pList.add(vo);
@@ -57,10 +57,9 @@ public class Main {
 		// 람다를 이용한 화면출력
 		bbsList.forEach(vo->{
 			System.out.println(vo);
-		});
-		// 위 코드 간소화
+		});		
 		bbsList.forEach(System.out::println);
 		
 	}
-	
+
 }

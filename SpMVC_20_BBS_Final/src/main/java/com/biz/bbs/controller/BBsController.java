@@ -3,6 +3,7 @@ package com.biz.bbs.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,7 @@ public class BBsController {
 	 * 
 	 */
 	@Autowired
+	@Qualifier("bbsV2")
 	private BBsService bbsService;
 	
 	@Autowired
@@ -169,11 +171,14 @@ public class BBsController {
 	}
 	
 	@RequestMapping(value="/repl",method=RequestMethod.GET)
-	public String repl(@RequestParam("b_id") String b_id, Model model) {
+	public String repl(
+			@RequestParam("b_id") String b_id,
+			Model model) {
 		
 		// 본글과 답글을 연결하기 위해서
-		// 답글의 b_p_id에 본글의 id 값을 저장
-		BBsVO bbsVO = bbsService.findById(Long.valueOf(b_id));
+		// 답글의 b_p_id에 본글의 id값을 저장
+		BBsVO bbsVO 
+			= bbsService.findById(Long.valueOf(b_id));
 		
 		String b_subject = "re : " + bbsVO.getB_subject();
 		bbsVO.setB_subject(b_subject);
@@ -185,12 +190,13 @@ public class BBsController {
 	}
 	
 	@RequestMapping(value="/repl",method=RequestMethod.POST)
-	public String repl(BBsVO bbsVO, Model model) {
-		
+	public String repl(BBsVO bbsVO,Model model) {
+
 		bbsVO.setB_p_id(bbsVO.getB_id());
 		bbsVO.setB_id(0L);
 		int ret = bbsService.insert(bbsVO);
 		return "redirect:/list";
+	
 	}
 	
 	@ResponseBody
@@ -207,6 +213,12 @@ public class BBsController {
 		}
 		return retFileName;
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 }
