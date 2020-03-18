@@ -28,19 +28,23 @@ public class BookService {
 	}
 
 	public int insert(BookVO bookVO) {
-		int ret = bDao.insert(bookVO);
-		return ret;
+		return bDao.insert(bookVO);
+	}
+	
+	public int update(BookVO bookVO) {
+		return bDao.update(bookVO);
+		
 	}
 
 	public int delete(String b_code) {
-		int ret = bDao.delete(b_code);
-		return ret;
+		return bDao.delete(b_code);
 	}
 
 	public BookVO findByBCode(String b_code) {
-		BookVO bookVO = bDao.findByBCode(b_code);
-		return bookVO;
+		return bDao.findByBCode(b_code);
 	}
+
+	
 	
 	
 

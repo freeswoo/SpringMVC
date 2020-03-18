@@ -44,17 +44,22 @@ public class BookController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value="/view",method=RequestMethod.GET)
-	public String view(String b_code, Model model) {
-		
+	@RequestMapping(value="/update",method=RequestMethod.GET)
+	public String update(String b_code, Model model) {		
 		BookVO bookVO = bService.findByBCode(b_code);
 		model.addAttribute("bookVO",bookVO);
-		return null;
+		return "update";
+	}
+	
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	public String update(BookVO bookVO) {		
+		bService.update(bookVO);
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value="/delete",method=RequestMethod.GET)
 	public String delete(String b_code) {
-		int ret = bService.delete(b_code);
+		bService.delete(b_code);
 		return "redirect:/";
 	}
 }
