@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.biz.naver">
+	<logger name="com.biz.unit">
 		<level value="info" />
 	</logger>
 	
