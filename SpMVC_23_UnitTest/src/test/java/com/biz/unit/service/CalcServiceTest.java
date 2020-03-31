@@ -1,17 +1,18 @@
 package com.biz.unit.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class CalcServiceTest {
+public class CalcServiceTest {
 
 	CalcService cs = null;
 	
 	/*
 	 * 현재 test케이스에서 공통으로 사용할
 	 * 변수, 객체등을 생성하는 초기화 method
+	 * test 객체가 작동될때 최초 한번 실행하는 method
 	 */
 	@Before
 	public void setUp() {
@@ -25,15 +26,15 @@ class CalcServiceTest {
 	public void timesTest() {
 		int result = cs.times(20, 30);
 		// assertEquals(예상답안, 계산결과, 허용오차)
-		assertEquals(600, result, 0);
+		assertEquals(600, result,0);
 	}
 	
 	@Test
 	public void sumTest() {
 		int result = cs.sum(20, 30);
-		assertEquals(50, result, 0);
+		assertEquals(50, result,0);
 	}
-	
+
 	@Test
 	public void timesTest1() {
 		int[][] testCase = { 
@@ -67,10 +68,13 @@ class CalcServiceTest {
 				{187,290,54230},
 				{477,446,212742}
 			};
+		
 		for(int i = 0 ; i < testCase.length ; i++) {
 			int result = cs.times(testCase[i][0], testCase[i][1]);
-			assertEquals(testCase[i][2], result, 0);
+			assertEquals(testCase[i][2], result,0);
 		}
 	}
 
+	
+	
 }

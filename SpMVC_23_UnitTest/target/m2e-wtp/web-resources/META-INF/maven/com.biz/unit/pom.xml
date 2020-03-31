@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.biz</groupId>
 	<artifactId>unit</artifactId>
-	<name>SpMVC_23_UnitTest</name>
+	<name>SpMVC23_UnitTest</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
@@ -41,6 +41,8 @@
 			<version>${org.springframework-version}</version>
 			<scope>test</scope>
 		</dependency>
+
+
 
 		<!-- AspectJ -->
 		<dependency>
@@ -119,12 +121,14 @@
 		</dependency>
 
 		<!-- Test -->
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.13</version>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
