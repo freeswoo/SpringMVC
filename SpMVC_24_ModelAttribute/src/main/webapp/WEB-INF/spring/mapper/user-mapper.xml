@@ -5,19 +5,19 @@
   
  <mapper namespace="com.biz.models.dao.UserDao">
  
- 	
  	<insert id="insert" parameterType="usersVO">
- 	INSERT INTO tbl_user
+ 		INSERT INTO tbl_user
 			(userId,
 			password,
 			userName,
 			userRolle)
-			VALUES (
+		VALUES (
 			#{userId},
 			#{password},
 			#{userName},
-			#{userRolle})	
+			#{userRolle})
  	</insert>
  	
+
  
  </mapper> 
