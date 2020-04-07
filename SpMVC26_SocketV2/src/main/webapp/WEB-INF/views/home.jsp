@@ -8,6 +8,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>나의 홈페이지</title>
 <style>
+	#message_list {
+		border: 1px solid red;
+		height: 25vh;
+		overflow: auto;
+	}
 	.from, .to {
 		padding:5px;
 	}
@@ -15,7 +20,6 @@
 		color : blue;
 		font-weight: bold;
 	}
-
 </style>
 <script
 	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
@@ -26,7 +30,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>	
 
 <script>
-	var socket = new SockJS('http://localhost:8080/socket/chat');
+	// var socket = new SockJS('http://localhost:8080/socket/chat');
+	var socket = new SockJS('http://192.168.4.12:8080/socket/chat');
 	
 	// 소켓 서버에 접속 시작
 	socket.onopen = function() {
@@ -36,9 +41,8 @@
 		if(userName && userName != "") {
 			socket.send( "userName:"+ userName ) // userName:홍길동
 		}
-		socket.send("GETUSERLIST")
+		socket.send("getUserList:" + userName)
 	};
-
 	// 서버로 부터 수신되는 이벤트
 	socket.onmessage = function(e) {
 		console.log('message', e.data);
@@ -54,31 +58,40 @@
 			return false;
 		}
 		
-		alert(mJson.msg)
+		// alert(mJson.msg)
 		if(mJson.msg && mJson.msg == 'userList') {
-
-			alert(mJson.userList)
-			
+			// alert(mJson.userList)
 			let userList = JSON.parse(mJson.userList)
-			
-			// 동적 tag를 만드는 jquery 코드
-			let options = $("<option/>",
-						{value:"all",
-							text:"전체"
-						}
+			$("#toList").empty()
+			$("#toList").append(
+					
+					// 동적 tag를 만드는 jquery 코드
+					$("<option/>",
+					{
+						value:"all",
+						text:"전체"
+					})
 			
 			)
-
-			$("#toList").append(options)	
 			
-			for(let i = 0 ; i < userList.length ; i++) {
-				options.append($("<option/>",
-						{value:userList[userList[0]].userName,
-						 text:userList[userList[0]].userName
-						})
-			)}
-			
-		
+			// js코드 내장 객체 method
+			// userList 객체 그룹중에서 각 요소의 키값만 추출하여
+			// 배열로 만들어 달라
+			let userListKeys = Object.keys(userList)
+			for(let i = 0 ; i < userListKeys.length ; i++) {
+				// console.log(userListKeys[i])
+				console.log("사용이름 :",userList[userListKeys[i]].userName)
+				$("#toList").append(
+						
+					// 동적 tag를 만드는 jquery 코드
+					$("<option/>",
+					{
+						value:userListKeys[i],
+						text:userList[userListKeys[i]].userName
+					})
+				)
+			}
+			return false;
 		}
 		
 		let html = "<div class='from text-right'>"  
@@ -89,15 +102,16 @@
 		html += "</div>"
 		
 		$("#message_list").append(html)
+		$("#message_list").scrollTop(
+				$("#message_list").prop('scrollHeight')
+			)
 		
 	};
-
 	// 소켓 서버와 접속 종료
 	//socket.onclose = function() {
 	//	console.log('close');
 	// };
 $(function(){
-
 	
 	$(document).on("submit","form",function(event){
 		event.preventDefault();
@@ -106,8 +120,11 @@ $(function(){
 		//socket.send(message)	
 		
 	})
-
+	
 	$(document).on("click","#btn_send",function(){
+		let toUserId = $("#toList").val()
+		let toUserName = $("#toList option:checked").text()
+		
 			let userName = $("#userName").val()
 			if(userName == "") {
 				alert("보내는 사람 이름을 입력하세요")
@@ -117,17 +134,23 @@ $(function(){
 			// userName과 message를 묶어서 JSON 데이터로 생성
 			let message = {
 					userName : userName,
+					toUser : toUserId,
 					message : $("#message").val()
 			}
 			
 			let html = "<div class='to'>"
 			html += "<span class='userName'>"
 			html += "나 : "
-			html += "</span>"
+			html += "</span>("
 			html += message.message
+			html += "<span>"
+			html += toUserName
+			html += ")</span>"
 			html += "</div>"
 			$("#message_list").append(html)
-
+			$("#message_list").scrollTop(
+				$("#message_list").prop('scrollHeight')
+			)
 			// socket을 통해 json 데이터를 보내기위해
 			// json 형 문자열로 변환시킨 후 전송
 			socket.send(JSON.stringify(message))	
@@ -138,8 +161,6 @@ $(function(){
 	
 	
 })
-
-
 </script>
 </head>
 <body>
@@ -147,6 +168,8 @@ $(function(){
 	<h2 class="text-white text-center">MY CHAT SERVICE</h2>
 </header>
 <section class="container-fluid">
+	<div id="message_list" class="col-8">
+	</div>
 	<form>
 		<div class="form-group">
 			<label for="userName">FROM</label>
@@ -170,18 +193,8 @@ $(function(){
 <section class="container-fluid">
 	<div id="user_list" class="col-3" >
 	</div>
-	<div id="message_list" class="col-8">
-	</div>
+	
 </section>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
