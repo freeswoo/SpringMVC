@@ -11,7 +11,7 @@
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
-				<value>/WEB-INF/spring/properties/spring-security.message.ko</value>
+				<value>/WEB-INF/spring/properties/spring-security.message.ko</value>			
 			</list>
 		</property>
 		<property name="defaultEncoding" value="UTF-8"/>
@@ -35,30 +35,9 @@
 			class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 			<constructor-arg index="0" value="4"/>
 	</bean>
-	
-	<!-- login을 수행할때 user DB로부터 사용자 정보 가져오기 설정 -->
-	<bean id="secureDao" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
-		<property name="dataSource" ref="authDB"/>
-		<property name="usersByUsernameQuery">
-			<value>
-				SELECT user_name AS username, 
-					user_pass as password, 
-					enabled
-				FROM tbl_users WHERE user_name=?
-			</value>
-		</property>
-		<property name="authoritiesByUsernameQuery">
-			<value>
-				SELECT username,authority
-				FROM authorities
-				WHERE username=?
-			</value>
-		</property>
-	</bean>
-	
+
 	<context:component-scan base-package="com.biz.sec.service.auth"/>
 	<bean id="authProvider" class="com.biz.sec.service.auth.AuthProviderImpl">
-	
 	</bean>
 	
 	<!-- 사용자 login을 검증 -->
@@ -127,18 +106,18 @@
 		/>
 		<!-- 
 		logout을 실행했을때는 반드시
-		invalidate-session="true"
-		delete-cookies="true" 로 설정을 한다.
+		invalidate-session=true
+		delete-cookies=true로 설정을 한다.
 		
-		delete-cookies="true"로 설정하지 않으면
+		delete-cookies=true로 설정하지 않으면
 		웹브라우저에 저장된 쿠키를 탈취당하여
 		서버 공격에 사용될 수 있다.
-		 -->
+		-->
 		<security:logout
 			logout-url="/logout"
 			invalidate-session="true"
 			delete-cookies="true"
-			logout-success-url=""
+			logout-success-url="/"
 		/>
 	</security:http>
 

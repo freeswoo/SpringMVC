@@ -17,16 +17,17 @@ import lombok.ToString;
 @ToString
 @Builder
 public class UserVO {
-
+	
 	// spring security에서 사용할 기본 칼럼
 	private long id;
 	private String username;
 	private String password;
 	private boolean enabled;
-
+	
 	private String email;
 	private String phone;
 	private String address;
+	
 
 }
 
