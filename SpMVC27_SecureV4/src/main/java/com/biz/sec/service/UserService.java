@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.biz.sec.domain.AuthorityVO;
 import com.biz.sec.domain.UserDetailsVO;
-import com.biz.sec.domain.UserVO;
 import com.biz.sec.persistance.AuthoritiesDao;
 import com.biz.sec.persistance.UserDao;
 
@@ -71,7 +70,7 @@ public class UserService {
 
 		// 회원가입 form에서 전달받은 password 값을 암호화 시키는 과정
 		String encPassword = passwordEncoder.encode(password);
-		UserVO userVO = UserVO.builder().username(username).password(encPassword).build();
+		UserDetailsVO userVO = UserDetailsVO.builder().username(username).password(encPassword).build();
 
 		int ret = userDao.insert(userVO);
 		List<AuthorityVO> authList = new ArrayList();
@@ -113,9 +112,27 @@ public class UserService {
 		return passwordEncoder.matches(password, userVO.getPassword());
 	}
 
+	public int update(UserDetailsVO userVO,String[] authList) {
+		
+		int ret = userDao.update(userVO);
+		if (ret > 0) {
+			List<AuthorityVO> authCollection = new ArrayList();
+			for(String auth : authList) {
+				if(!auth.isEmpty()) {
+					AuthorityVO authVO = AuthorityVO.builder()
+							.username(userVO.getUsername())
+							.authority(auth).build();
+					authCollection.add(authVO);
+				}
+			}
+			authDao.delete(userVO.getUsername());
+			authDao.insert(authCollection);
+		}
+		return ret;
+	}
 	
 	@Transactional
-	public int update(UserDetailsVO userVO,String[] authList) {
+	public int update(UserDetailsVO userVO) {
 
 		Authentication oldAuth 
 			= SecurityContextHolder
@@ -133,28 +150,11 @@ public class UserService {
 		// DB update가 성공하면
 		// 로그인된 session정보를 update 수행
 		if (ret > 0) {
-//			ret = authDao.update(
-//					new ArrayList(Arrays.asList(authList))
-//			);
-			List<AuthorityVO> authCollection = new ArrayList();
-			for(String auth : authList) {
-				if(!auth.isEmpty()) {
-					AuthorityVO authVO = AuthorityVO.builder()
-							.username(userVO.getUsername())
-							.authority(auth).build();
-					authCollection.add(authVO);
-				}
-			}
-			authDao.delete(userVO.getUsername());
-			authDao.insert(authCollection);
-			
-			
 			Authentication newAuth 
 					= new UsernamePasswordAuthenticationToken(
 					oldUserVO, 	// 변경된 사용자 정보 
 					oldAuth.getCredentials(),
-					this.getAuthorities(authList)); // 변경된 ROLE 정보
-
+					oldAuth.getAuthorities()); // 변경된 ROLE 정보
 			SecurityContextHolder.getContext()
 						.setAuthentication(newAuth);
 		}
@@ -176,6 +176,15 @@ public class UserService {
 		}
 		return authorities;
 	
+	}
+
+	@Transactional
+	public List<UserDetailsVO> selectAll() {
+		return userDao.selectAll();
+	}
+
+	public UserDetailsVO findByUserName(String username) {
+		return userDao.findByUserName(username);
 	}
 
 }
