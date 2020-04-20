@@ -177,7 +177,7 @@ public class UserService {
 		return authorities;
 	
 	}
-
+	
 	@Transactional
 	public List<UserDetailsVO> selectAll() {
 		return userDao.selectAll();
@@ -188,3 +188,6 @@ public class UserService {
 	}
 
 }
+
+
+

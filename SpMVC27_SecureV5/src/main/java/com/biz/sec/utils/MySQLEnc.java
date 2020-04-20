@@ -11,7 +11,7 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
  * 키보드에서 문자열을 입력받아서
  * 암호화된 문자열을 생성
  */
-public class GmailEnc {
+public class MySQLEnc {
 
 	public static void main(String[] args) {
 
@@ -27,10 +27,10 @@ public class GmailEnc {
 		
 		Scanner scanner = new Scanner(System.in);
 		
-		System.out.print("Gmail UserName >> ");
+		System.out.print("MySQL UserName >> ");
 		String userName = scanner.nextLine();
 		
-		System.out.print("Gmail Password >> ");
+		System.out.print("MySQL Password >> ");
 		String password = scanner.nextLine();
 		
 		/*
@@ -47,12 +47,12 @@ public class GmailEnc {
 		System.out.printf("password : %s \n",encPassword);
 		
 		String saveFile = "./src/main/webapp/WEB-INF/"
-				+ "spring/properties/gmail.connection.properties";
+				+ "spring/db.connection.properties";
 		
 		
-		String saveUserName = String.format("gmail.username=ENC(%s)",
+		String saveUserName = String.format("mysql.username=ENC(%s)",
 							encUserName);
-		String savePassword = String.format("gmail.password=ENC(%s)",
+		String savePassword = String.format("mysql.password=ENC(%s)",
 							encPassword);
 
 		
@@ -67,7 +67,7 @@ public class GmailEnc {
 			e.printStackTrace();
 		}
 		scanner.close();
-		System.out.println("naver.connection.properties 저장 완료!!!");
+		System.out.println("db.connection.properties 저장 완료!!!");
 
 	}
 }
