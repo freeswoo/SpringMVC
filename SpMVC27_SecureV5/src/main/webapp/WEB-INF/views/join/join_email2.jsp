@@ -47,7 +47,3 @@ section.email_body {
 
 </body>
 </html>
-
-
-
-

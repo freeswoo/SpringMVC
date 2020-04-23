@@ -19,7 +19,6 @@
 	padding:0;
 	box-sizing: border-box;
 }
-
 .join_form {
 	
 	width:400px;
@@ -33,21 +32,17 @@
 	box-shadow: 12px 12px 2px 1px rgba(0,0,255,0.2);
 	
 	margin:20px auto;
-
 }
-
 .join_form h2 {
 	color:white;
 	font-weight: 500;
 }
-
 .join_form h3 {
 	color:white;
 	font-weight: 300;
 	background-color: red;
 	border-radius: 20px;
 }
-
 .join_form input {
 	
 	background: none;
@@ -65,42 +60,31 @@
 	transition : 0.2s;
 	
 }
-
 .join_form input:focus {
 	width: 280px;
 	border-color: #2ECC71;
 }
-
 .join_form .option {
 	text-align: right;
 	margin-right: 3px;
-
 }
 .join_form label[for="view_pass"]{
-
  padding: 0 0 5px 2px;
  cursor: pointer;
  text-transform: uppercase;
-
   margin-bottom: 10px;
   font-size: 11px;
   font-weight: 400;
   text-transform: capitalize;
   color:white;
 }
-
 .join_form input[type="checkbox"]{
   vertical-align: middle;
   margin: -1px 5px 0 1px;
-
 }
-
 .join_form input[type='checkbox']:focus{
   width:200px;
-
 }
-
-
 .join_form button {
 	
 	border:2px solid #2ECC71;
@@ -117,15 +101,12 @@
 	
 	cursor: pointer;
 }
-
 .join_form button:hover {
 	background-color: #2ECC71;
 }
-
 .naver_login img {
 	border-radius: 10px;
 }
-
 /*
  div box에 image를 2개 가져오고
  초기에는 2번째 이미지를 감춰둔다
@@ -133,7 +114,6 @@
 .naver_login img:last-child {
 	display: none;
 }
-
 /*
 마우스를 div box에 올리면
 처음 이미지는 감추고, 두번째 이미지는 보여라
@@ -141,18 +121,15 @@
 .naver_login:hover img:last-child {
 	display: inline-block;
 }
-
 .naver_login:hover img:first-child {
 	display: none;
 }
-
 </style>
 
 <script>
 $(function(){
 	
 	$(document).on("click","#btn-join",function(){
-
 		// 유효성검사
 		// id, password가 입력되지 않았을때 경고
 		let username = $("#username")
@@ -164,19 +141,16 @@ $(function(){
 			username.focus()
 			return false;
 		}
-
 		if(password.val() == "") {
 			alert("비밀번호를 입력하세요")
 			password.focus()
 			return false;
 		}
-
 		if(re_password.val() == "") {
 			alert("비밀번호 확인 입력하세요")
 			re_password.focus()
 			return false;
 		}
-
 		if(password.val() != re_password.val()) {
 			alert("비밀번호와 비빌번호 확인이 다릅니다")
 			password.focus()
@@ -293,7 +267,3 @@ $(function(){
 
 </body>
 </html>
-	
-	
-	
-	

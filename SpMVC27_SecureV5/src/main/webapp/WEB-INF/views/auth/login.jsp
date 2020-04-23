@@ -7,27 +7,20 @@
 			prefix="sec"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" 
 			prefix="form" %>			
-
-<!DOCTYPE html>
-<html>
-<head>
+<html>			
+<head>			
 <%@ include file="/WEB-INF/views/include/include-head.jspf" %>
-
-
-<link rel="stylesheet"
-	href="${rootPath}/resources/css/login.css?2020-04-09" />
-
+</head>
 <script>
 $(function(){
 	$(document).on("click","button.join",function(){
 		document.location.href = "${rootPath}/join"		
 	})
 })
-
 </script>	
-</head>
 <body>
-	<section class="container">
+<%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
+	<section class="container body">
 		<form:form action="${rootPath}/login" method="POST" class="login_form">
 			<h1>
 				<span class="login">Log in</span> or <span class="sign-up">sign
@@ -58,10 +51,5 @@ $(function(){
 			</div>
 		</form:form>
 	</section>
-
-
-</body>
+	</body>
 </html>
-
-
-

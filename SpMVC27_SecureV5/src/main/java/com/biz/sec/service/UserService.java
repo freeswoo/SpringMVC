@@ -14,6 +14,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.biz.sec.domain.AuthorityVO;
@@ -112,7 +113,7 @@ public class UserService {
 	 * @return
 	 * 
 	 */
-	@Transactional
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public int insert(UserDetailsVO userVO) {
 
 		// 회원정보에 저장할 준비가 되지만
@@ -147,6 +148,7 @@ public class UserService {
 
 	}
 
+	@Transactional
 	public UserDetailsVO findById(long id) {
 
 		UserDetailsVO userVO = userDao.findById(id);
@@ -160,6 +162,7 @@ public class UserService {
 		return passwordEncoder.matches(password, userVO.getPassword());
 	}
 
+	@Transactional
 	public int update(UserDetailsVO userVO,String[] authList) {
 		
 		int ret = userDao.update(userVO);
@@ -194,7 +197,7 @@ public class UserService {
 		oldUserVO.setPhone(userVO.getPhone());
 		oldUserVO.setAddress(userVO.getAddress());
 
-		int ret = userDao.update(userVO);
+		int ret = userDao.update(oldUserVO);
 		// DB update가 성공하면
 		// 로그인된 session정보를 update 수행
 		if (ret > 0) {
