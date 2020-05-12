@@ -13,6 +13,7 @@
 <script>
 	$(function() {
 		$("input").prop("readonly", true)
+
 		$(document).on("click", "#btn_update", function() {
 			let pass = $("#password").val()
 			if (pass == "") {
@@ -23,6 +24,7 @@
 				return false;
 			}
 			if (pass != "") {
+
 				$.ajax({
 					url : '${rootPath}/user/password',
 					method : 'POST',
@@ -32,10 +34,12 @@
 					},
 					success : function(result) {
 						if (result == "PASS_OK") {
+
 							$("input").prop("readonly", false)
 							$("input").css("color", "blue")
 							$("button#btn_save").prop("disabled", false)
 							$("button#btn_update").prop("disabled", true)
+
 						} else {
 							alert("비밀번호가 일치하지 않습니다")
 						}
@@ -46,6 +50,7 @@
 				})
 			}
 		})
+
 	})
 </script>
 <style>
@@ -54,6 +59,7 @@ section {
 	left: 0;
 	width: 100%;
 }
+
 form.mypage-form {
 	width: 70%;
 	margin: 60px auto 30px;
@@ -67,17 +73,21 @@ form.mypage-form {
 	display: flex;
 	flex-flow: column;
 }
+
 form.mypage-form div.password {
 	display: none;
 }
+
 form.mypage-form input.auth {
 	display: block;
 }
+
 form#userVO label {
 	color: blue;
 	font-weight: bold;
 	margin: 10px 0 0 10px;
 }
+
 button:disabled, button[disabled] {
 	border: 1px solid #999 !important;
 	background-color: #ccc !important;
@@ -125,3 +135,8 @@ button:disabled, button[disabled] {
 
 </body>
 </html>
+
+
+
+
+

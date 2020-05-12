@@ -7,13 +7,82 @@
 
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
-<!DOCTYPE html>
 <html>
 <head>
 <%@ include file="/WEB-INF/views/include/include-head.jspf"%>
-<link rel="stylesheet"
-	href="${rootPath}/resources/css/join.css?2020-04-09" />
+</head>
 
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.join_form {
+	
+	width: 400px;
+	padding: 40px;
+	text-align: center;
+	z-index: 10;
+	border-radius: 20px;
+	box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, 0.2);
+	margin: 20px auto;
+	background-color: #F0F9FF;
+	
+}
+
+.join_form h2 {
+	font-weight: 500;
+	color: #696969;	
+	
+}
+
+.join_form h3 {
+	color: white;
+	font-weight: 300;
+	background-color: red;
+	border-radius: 20px;
+}
+
+.join_form .input-box {
+	display: flex;
+}
+
+.join_form .input-box label {
+	flex: 2;
+	padding: 8px;
+	font-weight: bold;
+	text-align: right;
+}
+
+.join_form .input-box input {
+	flex: 3;
+}
+
+
+.join_form .option {
+	text-align: right;
+	margin-right: 3px;
+}
+
+.join_form label[for="view-pass"] {
+	padding: 0 0 5px 2px;
+	cursor: pointer;
+	margin-bottom: 10px;
+	font-size: 0.8rem;
+	color: blue;
+}
+
+.join_form input[type="checkbox"] {
+	vertical-align: middle;
+	margin: -1px 5px 0 1px;
+}
+
+.join_form input[type='checkbox']:focus {
+	width: 200px;
+}
+</style>
 
 <script>
 	$(function() {
@@ -103,21 +172,23 @@
 				})
 
 		// 현재 DOM 화면에 class가 view_pass인 모든것에 적용
-		$(".view_pass").each(
+		$(".view-pass").each(
 				function(index, input) {
 
 					// 매개변수로 전달된 input을 선택하여
 					// 변수 $input에 임시 저장하라
 					let input_ref = $(input)
-					$("input#view_pass").click(
+					$("input#view-pass").click(
 							function() {
 								let change = $(this).is(":checked") ? "text"
 										: "password";
 								// 가상의 input 생성
 								// <input type='text'> 또는 <input type='password'>
-								let ref = $("<input type='" + change + "' />")
-										.val(input_ref.val()).insertBefore(
-												input_ref);
+								let ref = $("<input/>",{
+											'type' : change,
+											'class' : "form-control",
+											'value' : input_ref.val() 
+										}).insertBefore(input_ref);
 
 								input_ref.remove();
 								input_ref = ref;
@@ -127,51 +198,52 @@
 </script>
 <style>
 .message {
-	color: #0062cc;
+	color: yellow;
 	font-weight: bold;
-	font-size: 0.5rem;
+	font-size: 0.7rem;
+	text-align: right;
 }
 </style>
 </head>
 <body>
-	<%@ include file="/WEB-INF/views/include/include-nav.jspf"%>
+<%@ include file="/WEB-INF/views/include/include-nav.jspf"%>
+<section class="container body">
+	<form:form method="POST" modelAttribute="userVO"
+		action="${rootPath}/join/join_ok" class="join_form">
 
-	<div class="container join-container">
-		<div class="row">
-			<div class="col-md-6 join-form">
-				<h3>회원가입</h3>
-				
-				<form:form method="POST" action="${rootPath}/join/join_next"
-					modelAttribute="userVO">
-					
-					<div class="form-group">
-						<form:input type="text" path="username" placeholder="사용자 ID"
-							class="form-control" />
-					</div>
-					
-					<div class="message form-group" id="m_username"></div>
-					
-					<div class="form-group">
-						<form:input type="password" path="password"
-							class="view_pass form-control" placeholder="비밀번호" />
-						<input type="password" id="re_password" name="re_password"
-							class="view_pass form-control" placeholder="비밀번호 재입력" >
-					</div>
-					<div class="option form-group">
-						<label for="view_pass"> 
-						<input type="checkbox"	id="view_pass" class="checkbox"> 비밀번호 보이기
-						</label>
-					</div>
-					<div class="form-group">
-						<button type="button" id="btn-join" class="btnSubmit">회원가입</button>
-					</div>
-					<div class="form-group">
-						<a href="#" type="button" id="btn-loss" class="ForgetPwd" >아이디 또는 비밀번호를 잃어버리셨어요?</a>
-					</div>
-				</form:form>
-			</div>
+		<h2>회원가입</h2>
+		<div class="input-box">
+			<label for="username">USER NAME</label>
+			<form:input type="text" class="form-control" 
+					path="username"
+					placeholder="사용자 ID" />
 		</div>
-	</div>
+		<div class="message" id="m_username"></div>
+		<div class="input-box">
+			<label for="password">PASSWORD</label>
+			<form:input type="password" class="form-control view-pass" 
+					path="password"
+					placeholder="비밀번호" />
+		</div>
+		<div class="input-box">
+			<label for="password">re PASSWORD</label>
+			<input type="password" id="re_password" 
+					name="re_password"
+				class="form-control view-pass"
+				placeholder="비밀번호 한번 더~~">
+		</div>
+		<div class="option">
+			<label for="view-pass"> 
+			<input type="checkbox" id="view-pass">
+				비밀번호 보이기
+			</label>
+		</div>
+		<button type="button" class="btn btn-primary" id="btn-join">회원가입</button>
+		<button type="button" class="btn btn-success" id="btn-loss">ID/비번찾기</button>
+
+	</form:form>
+</section>
 </body>
 </html>
+
 
