@@ -6,15 +6,15 @@ import com.biz.shop.config.security.JasyptConfig;
 import com.biz.shop.config.security.SecurityConfig;
 /**
  * web.xml을 대신할 클래스
- * @author 505-14
+ * @author Master
  *
  */
-public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer{
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		// TODO Auto-generated method stub
-		return new Class[] {
+		return new Class[] { 
 				RootConfig.class,
 				SecurityConfig.class,
 				JasyptConfig.class,
@@ -33,8 +33,13 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 		// TODO Auto-generated method stub
 		return new String[] { "/" };
 	}
-	
-	
-	
 
 }
+
+
+
+
+
+
+
+

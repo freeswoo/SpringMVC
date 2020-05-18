@@ -10,20 +10,19 @@
 	<sec:http>
 		<sec:intercept-url pattern="/login" access="permitAll"/>
 		<sec:intercept-url pattern="/**" access="isAuthenticated()"/>
-		<sec:form-login
-			username-parameter="username"
-			password-parameter="password"/>
-		<sec:logout />
+		<sec:form-login 
+				username-parameter="username"
+				password-parameter="password"/>
+		<sec:logout/>
 	</sec:http>
+	
 	<sec:authentication-manager>
 		<sec:authentication-provider>
 			<sec:user-service>
-				<sec:user name="admin"
-				password="{noop}12345"
+				<sec:user name="admin" 
+					password="{noop}12345"
 				authorities="ROLE_ADMIN"/>
-			</sec:user-service>
+			</sec:user-service>		
 		</sec:authentication-provider>
 	</sec:authentication-manager>
-	
-	
 </beans>

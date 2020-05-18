@@ -10,11 +10,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthorityVO {
-
+	
 	private long id;
-	/*필수항목 필드변수
-	 * -------------------------------*/
+	
+	/* 필수항목 필드변수
+	 * -----------------------------------*/
 	private String username;
 	private String authority;
-
+	
 }

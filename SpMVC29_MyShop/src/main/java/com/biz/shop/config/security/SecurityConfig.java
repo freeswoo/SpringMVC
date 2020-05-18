@@ -1,15 +1,19 @@
 package com.biz.shop.config.security;
 
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -20,18 +24,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/admin/**").hasRole("ADMIN")
 		.antMatchers("/user/mypage").hasAnyRole("ADMIN","USER")
 		.antMatchers("/user/**").permitAll()
-		.anyRequest().authenticated(); // 위에 나열한 것 외에는 모두 인증 필요
+		.antMatchers("/**").permitAll();
+		// .anyRequest().authenticated(); // 위에 나열한 것 외에는 모두 인증 필요
 		
 		http.formLogin()
+		
+		// security에서 지원하는 login URL
+		.loginProcessingUrl("/login")
+		
+		// login form
 		.loginPage("/user/login")
 		.usernameParameter("username")
 		.passwordParameter("password");
 		
+		
 		http.logout()
 		.logoutUrl("/logout")
-		.logoutSuccessUrl("/"); // 로그아웃 성공시 홈으로~
+		.logoutSuccessUrl("/");
 		
 	}
+
+	
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -44,15 +57,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
+
 		// TODO Auto-generated method stub
 		// super.configure(web);
 		web.ignoring().antMatchers("/resources/**");
+		
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new StandardPBEStringEncryptor();
+				
 	}
 
-	
-	
-	
-	
-	
 
+	
+	
+	
+	
+	
+	
+	
+	
 }
