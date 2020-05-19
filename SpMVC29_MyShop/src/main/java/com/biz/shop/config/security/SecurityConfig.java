@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-//@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
@@ -67,6 +66,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 	}
 	
+	/*
+	 * 암호화된 사용자 password를 비교(match)하기 위한 클래스 생성
+	 * Authen...Provider에 주입되는 객체 
+	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
