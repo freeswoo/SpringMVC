@@ -1,4 +1,4 @@
-package com.biz.shop.service;
+package com.biz.shop.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
