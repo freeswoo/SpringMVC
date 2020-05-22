@@ -1,9 +1,9 @@
-package com.biz.shop.sql;
+package com.biz.shop.persistance.sql;
 
 import org.apache.ibatis.jdbc.SQL;
 
 public class ProductSQL {
-
+	
 	public String pro_insert() {
 		
 		SQL sql = new SQL();
@@ -20,11 +20,11 @@ public class ProductSQL {
 		
 		.INTO_COLUMNS("p_vat")
 		.INTO_VALUES("#{p_vat}")
-		
+
 		.INTO_COLUMNS("p_file")
 		.INTO_VALUES("#{p_file}");
+		return sql.toString();
 		
-		return sql.toString();	
 	}
 	
 	public String pro_update() {
@@ -36,10 +36,19 @@ public class ProductSQL {
 		.SET("p_bcode = #{p_bcode}")
 		.SET("p_iprice = #{p_iprice}")
 		.SET("p_oprice = #{p_oprice}")
-		.SET("p_vat = #{p_vat}")
-		.SET("p_file = #{p_file}")
-		.WHERE("p_code = #{p_code}");
+		.SET("p_vat  = #{p_vat}")
+		.SET("p_file  = #{p_file}")
+		.WHERE("p_code = #{p_code} ");
 		
 		return sql.toString();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+
 }

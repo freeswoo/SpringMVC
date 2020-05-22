@@ -8,7 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /*
- * 상품 정보의 이미지들을 관리할 table
+ * 상품정보의 이미지들을 관리할 table
  */
 @Getter
 @Setter
@@ -17,9 +17,12 @@ import lombok.ToString;
 @ToString
 @Builder
 public class ProFileVO {
-
 	private long id;
-	private String file_p_code; // 상품테이블과 join위한 key
+	private String file_p_code ; // 상품테이블과 join위한 key
 	private String file_origin_name; // 실제이미지
-	private String file_uploda_name; // 업로드된 변경된 이미지
+	private String file_upload_name; // 업로드된 변경된 이름
 }
+
+
+
+

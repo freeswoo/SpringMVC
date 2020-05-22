@@ -1,4 +1,4 @@
-package com.biz.shop.sql;
+package com.biz.shop.persistance.sql;
 
 import org.apache.ibatis.jdbc.SQL;
 
@@ -19,7 +19,7 @@ public class UserSQL {
 		.SELECT("user_name as username")
 		.SELECT("user_pass as password")
 		.SELECT("ENABLED")
-		// .SELECT("nickname")
+//		.SELECT("nickname")
 		.SELECT("phone")
 		.SELECT("email")
 		.SELECT("address")
@@ -39,7 +39,7 @@ public class UserSQL {
 		.SELECT("user_name as username")
 		.SELECT("user_pass as password")
 		.SELECT("ENABLED")
-		// .SELECT("nickname")
+//		.SELECT("nickname")
 		.SELECT("phone")
 		.SELECT("email")
 		.SELECT("address")

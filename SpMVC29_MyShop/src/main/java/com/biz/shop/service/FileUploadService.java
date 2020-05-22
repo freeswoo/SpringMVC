@@ -2,10 +2,11 @@ package com.biz.shop.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Select;
+
 import com.biz.shop.domain.ProFileVO;
 
 public interface FileUploadService {
-
 	
 	public List<ProFileVO> selectAll();
 	

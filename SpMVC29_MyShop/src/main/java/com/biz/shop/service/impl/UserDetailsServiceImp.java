@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import com.biz.shop.domain.AuthorityVO;
 import com.biz.shop.domain.UserDetailsVO;
 import com.biz.shop.persistance.AuthorityDao;
+import com.biz.shop.persistance.DDL_Dao;
 import com.biz.shop.persistance.UserDao;
+import com.biz.shop.persistance.sql.CreateTableSQL;
 
 @Service
 public class UserDetailsServiceImp implements UserDetailsService{
@@ -22,39 +24,26 @@ public class UserDetailsServiceImp implements UserDetailsService{
 	private final UserDao userDao;
 	private final AuthorityDao authDao;
 	
-	public UserDetailsServiceImp(UserDao userDao, AuthorityDao authDao) {
+	private final DDL_Dao ddl_dao;
+	
+	public UserDetailsServiceImp(UserDao userDao,AuthorityDao authDao,DDL_Dao ddl_dao) {
 		this.userDao = userDao;
 		this.authDao = authDao;
-	
-		// 테이블 생성 부분을 코딩하기 위한 방법
-		String create_user_table = " CREATE TABLE IF NOT EXISTS tbl_users ("
-				+ "	id bigint  PRIMARY KEY AUTO_INCREMENT, " 
-				+ "	user_name varchar(50) UNIQUE, "
-				+ "	user_pass varchar(125), " 
-				+ " enabled boolean default true, "
-				+ "	nickname varchar(50), "
-				+ "	email varchar(50), "
-				+ "	phone varchar(20), " 
-				+ "	address varchar(125) " + " ) ";
+		this.ddl_dao = ddl_dao;
 
-		String create_auth_table = " CREATE TABLE IF NOT EXISTS authorities ("
-				+ "	id bigint PRIMARY KEY AUTO_INCREMENT," 
-				+ "    username varchar(50)," + "    authority varchar(50)"
-				+ " ) ";
-
-	
-		userDao.create_table(create_user_table);
-		userDao.create_table(create_auth_table);
-		
+		ddl_dao.create_table(CreateTableSQL.create_user_table);
+		ddl_dao.create_table(CreateTableSQL.create_auth_table);
 	
 	}
 	
 	/*
+	 * 
 	 * tbl_users 테이블로 부터 username, password, enabled값을 가져와서
 	 * UserDetailsVO에 담기
 	 * 
-	 * loadUserByUsername() method 는 Authen..Provider에서 호출하여
+	 * loadUserByUsername() method는 Authen..Provider에서 호출하여
 	 * 로그인한 사용자 정보를 가져간다.
+	 * 
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -63,24 +52,24 @@ public class UserDetailsServiceImp implements UserDetailsService{
 		 if(userVO == null) {
 			 throw new UsernameNotFoundException(username 
 					 + " 정보를 찾을 수 없음");
-		}
-		 
+		 }
+		
 		userVO.setAccountNonExpired(true);
 		userVO.setAccountNonLocked(true);
 		userVO.setCredentialsNonExpired(true);
 		 
-		// username에 해당하는 ROLE List 추출하여 VO에 setting
+		 // username에 해당하는 ROLE List 추출하여 VO에 setting
 		userVO.setAuthorities(getAuthorities(username));
 		return userVO;
+	
 	}
 	
 	/*
-	 * authorities 테이블에서 ROLE 정보를 가져와서
-	 * UserDetailsVO와 합성하기 위한 준비를 수행하는 method
+	 *  authorities 테이블에서 ROLE 정보를 가져와서 
+	 *  UserDetailsVO와 합성하기 위한 준비를 수행하는 method
 	 */
 	private Collection<GrantedAuthority> getAuthorities(String username) {
-		
-		//1. authorities 테이블에서 username으로 조회한 ROLE List 추출
+		// 1. authorities 테이블에서 username으로 조회한 ROLE List 추출
 		List<AuthorityVO> authList = authDao.findByUserName(username);
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		
@@ -88,11 +77,14 @@ public class UserDetailsServiceImp implements UserDetailsService{
 		for(AuthorityVO vo : authList) {
 			
 			SimpleGrantedAuthority sAuth
-				= new SimpleGrantedAuthority(vo.getAuthority());
+			= new SimpleGrantedAuthority(vo.getAuthority());
 			authorities.add(sAuth);
+			
 		}
 		return authorities;
+		
 	}
+	
 
 	
 	
