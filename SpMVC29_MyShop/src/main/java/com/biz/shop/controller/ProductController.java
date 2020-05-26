@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,7 +67,7 @@ public class ProductController {
 		
 		log.debug("파일이름:"+file.getOriginalFilename());
 		
-		// proService.insert(productVO);
+		proService.insert(productVO,file);
 		return "redirect:/product/list";
 	
 	}
@@ -85,9 +86,14 @@ public class ProductController {
 	}
 	
 	
-	
-	public String deteilView(long id) {
-		return "product/deteil";
+	@RequestMapping(value="/detail/{p_code}")
+	public String deteilView(
+			ProductVO productVO,
+			@PathVariable(name="p_code") String p_code, Model model) {
+		
+		productVO = proService.findByPCode(p_code);
+		model.addAttribute(productVO);
+		return "product/pro_detail";
 	}
 
 	public String update(long id) {
